@@ -13,7 +13,7 @@ import Sidebar from "@/components/Sidebar";
 export default function App({ Component, pageProps }) {
 
   const [darkMode, setDarkMode] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   useEffect(() => {
     // Retrieve user's theme preference from local storage or other sources
@@ -41,7 +41,7 @@ export default function App({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
        <CssBaseline />
-       <AppBar position="static">
+       <AppBar position="fixed">
       <Toolbar>
         <IconButton
             size="large"
@@ -72,8 +72,14 @@ export default function App({ Component, pageProps }) {
       </Toolbar>
     </AppBar> 
    <Box sx={{ display: 'flex' }}>
-     <Sidebar setIsSidebarOpen={setIsSidebarOpen} open={isSidebarOpen} />
-     <Component {...pageProps} />
+    {
+      isSidebarOpen ? (
+        <Sidebar />
+      ):''
+    }
+     <Box sx={{ flexGrow: 1, overflowY: 'auto' }}>
+       <Component {...pageProps} />
+     </Box>
    </Box>
     </ThemeProvider>
   );
